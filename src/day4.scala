@@ -73,9 +73,35 @@ object Day4 extends App {
       firstWinBoard(tailNumbers, markedBoards)
     }
   }
+  
+  def lastWinBoard(numbers: List[Int], boards: List[Board]): Result = {
+    val number :: tailNumbers = numbers
+    boards match {
+      case Nil => throw new RuntimeException("incorrect input data")
+      case lastBoard :: Nil => {
+        val lastMarkedBoard = boardWithoutNumber(number, lastBoard)
+        if (hasWin(lastMarkedBoard)) {
+          Result(number, lastMarkedBoard)
+        } else {
+          lastWinBoard(tailNumbers, List(lastMarkedBoard))
+        }
+      }
+      case _ :: _ => {
+        val markedBoards = boards.map(boardWithoutNumber(number, _))
+        val noWinBoards = markedBoards.filterNot(hasWin(_))
+        lastWinBoard(tailNumbers, noWinBoards)
+      }
+    }
+  }
 
   def part1(source: String): Unit = {
     val result = firstWinBoard(numbers(source), formatted(source))
+    val sumNotMarked = result.winBoard.rows.flatten.sum
+    printGreen(s"${result.lastNumber} x $sumNotMarked = ${result.lastNumber * sumNotMarked}")
+  }
+  
+  def part2(source: String): Unit = {
+    val result = lastWinBoard(numbers(source), formatted(source))
     val sumNotMarked = result.winBoard.rows.flatten.sum
     printGreen(s"${result.lastNumber} x $sumNotMarked = ${result.lastNumber * sumNotMarked}")
   }
@@ -86,9 +112,9 @@ object Day4 extends App {
   println("---")
   part1(source)
 
-  // println("---------------")
+  println("---------------")
 
-  // part2(sampleInput)
-  // println("---")
-  // part2(input)
+  part2(sample)
+  println("---")
+  part2(source)
 }
