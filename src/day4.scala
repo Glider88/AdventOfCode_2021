@@ -1,3 +1,6 @@
+import Helpers._
+
+object Day4 extends App {
   val sample = """
 7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
 
@@ -19,6 +22,7 @@
 22 11 13  6  5
  2  0 12  3  7
 """
+
   type Row = Set[Int]
   type Column = Set[Int]
   type Board = (List[Row], List[Column])
@@ -47,7 +51,7 @@
     hasEmptySet(board._1) || hasEmptySet(board._2)
 
   def isWin(boards: List[Board]): Boolean =
-    boards.filterNot(isWinBoard(_)).isEmpty
+    !boards.filter(isWinBoard(_)).isEmpty
 
   def formatted(source: String): List[Board] = {
     val boardsList = asList(source)
@@ -58,29 +62,33 @@
     })
   }
 
-val boards = formatted(sample)
-val number :: tailNumbers = numbers(sample)
-List(7,4,9,5,11,17,23,2,0,14,21,24)
+  case class WinState(lastNumber: Int, winBoard: Board)
 
-val b1  = boardWithoutNumber(7, boards(2))
-val b2  = boardWithoutNumber(4, b1)
-val b3  = boardWithoutNumber(9, b2)
-val b4  = boardWithoutNumber(5, b3)
-val b5  = boardWithoutNumber(11, b4)
-val b6  = boardWithoutNumber(17, b5)
-val b7  = boardWithoutNumber(23, b6)
-val b8  = boardWithoutNumber(2, b7)
-val b9  = boardWithoutNumber(0, b8)
-val b10 = boardWithoutNumber(14, b9)
-val b11 = boardWithoutNumber(21, b10)
-val b12 = boardWithoutNumber(24, b11)
+  def wonBoard(numbers: List[Int], boards: List[Board]): WinState = {
+    val number :: tailNumbers = numbers
+    val markedBoards = boards.map(boardWithoutNumber(number, _))
+    if (isWin(markedBoards)) {
+      WinState(number, markedBoards.filter(isWinBoard(_)).head)
+    } else {
+      wonBoard(tailNumbers, markedBoards)
+    }
+  }
 
-isWinBoard(b11)
-isWinBoard(b12)
+  def part1(source: String): Unit = {
+    val state = wonBoard(numbers(source), formatted(source))
+    val sumNotMarked = state.winBoard._1.flatten.sum
+    printGreen(s"${state.lastNumber} x $sumNotMarked = ${state.lastNumber * sumNotMarked}")
+  }
 
-val a = b12._1
-hasEmptySet(b12._1)
+  val source = read("day4") 
 
-!b12._1.filter(_.isEmpty).isEmpty
+  part1(sample)
+  println("---")
+  part1(source)
 
-b12._1.flatten.sum
+  // println("---------------")
+
+  // part2(sampleInput)
+  // println("---")
+  // part2(input)
+}
