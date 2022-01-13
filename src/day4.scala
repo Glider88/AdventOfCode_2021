@@ -25,7 +25,7 @@ object Day4 extends App {
 
   type Row = Set[Int]
   type Column = Set[Int]
-  type Board = (List[Row], List[Column])
+  case class Board(rows: List[Row], columns: List[Column])
 
   def numbers(source: String): List[Int] =
     source.trim.linesIterator.next().split(",").map(_.toInt).toList
@@ -42,42 +42,42 @@ object Day4 extends App {
   }
   
   def boardWithoutNumber(number: Int, board: Board): Board = 
-    (board._1.map(_ - number), board._2.map(_ - number))
+    Board(board.rows.map(_ - number), board.columns.map(_ - number))
 
   def hasEmptySet(sets: List[Set[Int]]): Boolean =
-    !sets.filter(_.isEmpty).isEmpty
+    sets.find(_.isEmpty).isDefined
   
-  def isWinBoard(board: Board): Boolean =
-    hasEmptySet(board._1) || hasEmptySet(board._2)
+  def hasWin(board: Board): Boolean =
+    hasEmptySet(board.rows) || hasEmptySet(board.columns)
 
-  def isWin(boards: List[Board]): Boolean =
-    !boards.filter(isWinBoard(_)).isEmpty
+  def hasWin(boards: List[Board]): Boolean =
+    boards.find(hasWin(_)).isDefined
 
   def formatted(source: String): List[Board] = {
     val boardsList = asList(source)
     boardsList.map(rowsList => {
       val rows = rowsList.map(rowList => rowList.toSet)
       val columns = rowsList.transpose.map(columnList => columnList.toSet)
-      (rows, columns)
+      Board(rows, columns)
     })
   }
 
-  case class WinState(lastNumber: Int, winBoard: Board)
+  case class Result(lastNumber: Int, winBoard: Board)
 
-  def wonBoard(numbers: List[Int], boards: List[Board]): WinState = {
+  def firstWinBoard(numbers: List[Int], boards: List[Board]): Result = {
     val number :: tailNumbers = numbers
     val markedBoards = boards.map(boardWithoutNumber(number, _))
-    if (isWin(markedBoards)) {
-      WinState(number, markedBoards.filter(isWinBoard(_)).head)
+    if (hasWin(markedBoards)) {
+      Result(number, markedBoards.filter(hasWin(_)).head)
     } else {
-      wonBoard(tailNumbers, markedBoards)
+      firstWinBoard(tailNumbers, markedBoards)
     }
   }
 
   def part1(source: String): Unit = {
-    val state = wonBoard(numbers(source), formatted(source))
-    val sumNotMarked = state.winBoard._1.flatten.sum
-    printGreen(s"${state.lastNumber} x $sumNotMarked = ${state.lastNumber * sumNotMarked}")
+    val result = firstWinBoard(numbers(source), formatted(source))
+    val sumNotMarked = result.winBoard.rows.flatten.sum
+    printGreen(s"${result.lastNumber} x $sumNotMarked = ${result.lastNumber * sumNotMarked}")
   }
 
   val source = read("day4") 
