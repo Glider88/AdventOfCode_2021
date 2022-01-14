@@ -1,10 +1,7 @@
-    def range(a: Int, b: Int): List[Int] =
-      if (a <= b) (a to b).toList
-      else (b to a).toList.reverse 
+val f0 = List(3,4,3,1,2)
+val f1 = f0.map(_ - 1)
+val f2 = f1.map(_ - 1)
+f2.count(_ == -1)
+f2.map(f => if (f == -1) 6 else f) ++ List.fill(3)(8)
 
-
-range(1, 4)
-range(4, 1)
-
-
-range(1, 4) zip range(4, 1)
+List.fill(9)(0)
