@@ -1,18 +1,63 @@
-val ps = List((1, 2), (3, 1), (2, 3))
+  val sample = """
+6,10
+0,14
+9,10
+0,3
+10,4
+4,11
+6,0
+6,12
+4,1
+0,13
+10,12
+3,4
+3,0
+8,4
+1,10
+2,14
+8,10
+9,0
 
-val o = 1
-val t = 2
+fold along y=7
+fold along x=5
+"""
 
-ps.map {
-  case (`o`, v) => s"$o-$v"
-  case (w, `o`) => s"$w-$o"
-  case _ => "?" 
-}
+val p :: f :: Nil = "(?m)^$".r.split(sample.trim).toList
 
-val l = List("a", "b", "b", "c") diff List("b") diff List("b")
+def range(a: Int, b: Int): List[Int] =
+  if (a <= b) (a to b).toList
+  else (b to a).toList.reverse 
 
-Set("a", "b", "c") intersect List("b", "b", "c").toSet
+(range(7 + 1, 7 * 2) zip range(7 - 1, 0)).toMap
+/*
+     0 1 2 3 4 5 6 7 8 9 10
+   0 . . . # . | # . . #  .
+   1 . . . . # | . . . .  .
+   2 . . . . . | . . . .  . 
+   3 # . . . . | . . . .  . 
+   4 . . . # . | . . # .  # 
+   5 . . . . . | . . . .  . 
+   6 . . . . . | . . . .  . 
+   7 - - - - - + - - - -  - 
+   8 . . . . . | . . . .  . 
+   9 . . . . . | . . . .  . 
+  10 . # . . . | # . # #  .
+  11 . . . . # | . . . .  .
+  12 . . . . . | # . . .  # 
+  13 # . . . . | . . . .  . 
+  14 # . # . . | . . . .  .
 
-val (b, s) = Set(1, 3, 2, 4).partition(_ > 2)
+  6 ->  8
+  5 ->  9
+  4 -> 10
+  3 -> 11
+  2 -> 12
+  1 -> 13
+  0 -> 14
 
-List(1, 2, 3, 1).distinct
+  4 ->  6
+  3 ->  7
+  2 ->  8
+  1 ->  9
+  0 -> 10
+*/
