@@ -1,6 +1,6 @@
 import Helpers._
 
-object Day12 extends App {
+object Day13 extends App {
   val sample = """
 6,10
 0,14
