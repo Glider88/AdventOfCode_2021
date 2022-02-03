@@ -1,242 +1,418 @@
+"12345".toList.map(char => s"$char").map(_.toInt)
+
 /*
-B C N H
 
-CH -> B
-HH -> N
-CB -> H
-NH -> C
-HB -> C
-HC -> B
-HN -> C
-NN -> C
-BH -> H
-NC -> B
-NB -> B
-BN -> B
-BB -> N
-BC -> B
-CC -> N
-CN -> C
+   0 1 2 3 4 5 6 7 8 9
 
-CH -> CBH
-HH -> HNH
-CB -> CHB
-NH -> NCH
-HB -> HCB
-HC -> HBC
-HN -> HCN
-NN -> NCN
-BH -> BHH
-NC -> NBC
-NB -> NBB
-BN -> BBN
-BB -> BNB
-BC -> BBC
-CC -> CNC
-CN -> CCN
-
-0  - NNCB
-
-NCN NBC CHB
-
-NCN BC HB
-
-1  - NCNBCHB
-2  - NBCCNBBBCBHCB
-3  - NBBBCNCCNBBNBNBBCHBHHBCHB
-4  - NBBNBNBBCCNBCNCCNBBNBBNBBBNBBNBBCBHCBHHNHCBBCBHCB
-5  - NBBNBBNBBBNBBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBNBBNBBNBBNBBNBBCHBHHBCHBHHNHCNCHBCHBNBBCHBHHBCHB
-6  - NBBNBBNBBNBBNBBNBNBBNBBNBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCBHCBBNBBNBBCBHCBHHNHCBBCBHCB
-7  - NBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCNCCNBBBCCNBCNCCNBBNBBNBBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCHBHHBCHBHHNHCNCHBCHBNBBCHBHHBCHBHHNHCNCHBCCNBCBHCBBCNCCNBBBCHBHHBCHBNBBCHBHHBCHBNBBNBBNBBNBBNBBCHBHHBCHBHHNHCNCHBCHBNBBCHBHHBCHB
-8  - NBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBNBBNBBNBBNBBNBBCNCCNBBBCCNBCNCCNBBNBBNBBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCBHCBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCNCCNBBBCHBHHBCHBNBBCCNBCNCCNBBNBNBBCBHCBHHNHCBBCBHCBBNBBNBBCBHCBHHNHCBBCBHCBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCBHCBBNBBNBBCBHCBHHNHCBBCBHCB
-9  - NBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCNCCNBBBCCNBCNCCNBBNBBNBBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBNBBNBBNBBNBBNBBCNCCNBBBCCNBCNCCNBBNBBNBBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCHBHHBCHBHHNHCNCHBCHBNBBCHBHHBCHBHHNHCNCHBCCNBCBHCBBCNCCNBBBCHBHHBCHBNBBCHBHHBCHBNBBNBBNBBNBBNBBCHBHHBCHBHHNHCNCHBCHBNBBCHBHHBCHBHHNHCNCHBCCNBCBHCBBCNCCNBBBCHBHHBCHBNBBCCNBCNCCNBBNBNBBCBHCBHHNHCBBCBHCBBNBBNBBCNCCNBBBCCNBCNCCNBBNBBNBBBNBBNBBCHBHHBCHBHHNHCNCHBCHBNBBCHBHHBCHBNBBNBBNBBNBBNBBCHBHHBCHBHHNHCNCHBCHBNBBCHBHHBCHBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCHBHHBCHBHHNHCNCHBCHBNBBCHBHHBCHBHHNHCNCHBCCNBCBHCBBCNCCNBBBCHBHHBCHBNBBCHBHHBCHBNBBNBBNBBNBBNBBCHBHHBCHBHHNHCNCHBCHBNBBCHBHHBCHB
-10 - NBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBNBBNBBNBBNBBNBBCNCCNBBBCCNBCNCCNBBNBBNBBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCNCCNBBBCCNBCNCCNBBNBBNBBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBNBBNBBNBBNBBNBBCNCCNBBBCCNBCNCCNBBNBBNBBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCBHCBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCNCCNBBBCHBHHBCHBNBBCCNBCNCCNBBNBNBBCBHCBHHNHCBBCBHCBBNBBNBBCBHCBHHNHCBBCBHCBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCBHCBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCNCCNBBBCHBHHBCHBNBBCCNBCNCCNBBNBNBBCBHCBHHNHCBBCBHCBBNBBNBBCNCCNBBBCCNBCNCCNBBNBBNBBBNBBNBBCHBHHBCHBHHNHCNCHBCHBNBBCHBHHBCHBNBBNBBNBBNBBNBBCCNBCNCCNBBNBNBBCNCCNBBBCCNBCNCCNBBNBBNBBNBBNBBNBNBBNBBNBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCBHCBBNBBNBBCBHCBHHNHCBBCBHCBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCBHCBBNBBNBBCBHCBHHNHCBBCBHCBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCBHCBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCNCCNBBBCHBHHBCHBNBBCCNBCNCCNBBNBNBBCBHCBHHNHCBBCBHCBBNBBNBBCBHCBHHNHCBBCBHCBBNBBNBBNBBNBBNBBNBBNBBNBBNBBNBBCBHCBHHNHCBBCBHCBHHNHCNCHBCCNBCBHCBBCBHCBBNBBNBBCBHCBHHNHCBBCBHCB
+0  1 1 6 3 7 5 1 7 4 2
+1  1 3 8 1 3 7 3 6 7 2
+2  2 1 3 6 5 1 1 3 2 8
+3  3 6 9 4 9 3 1 5 6 9
+4  7 4 6 3 4 1 7 1 1 1
+5  1 3 1 9 1 2 8 1 3 7
+6  1 3 5 9 9 1 2 4 2 1
+7  3 1 2 5 4 2 1 6 3 9
+8  1 2 9 3 1 3 8 5 2 1
+9  2 3 1 1 9 4 4 5 8 1
 
 
 
-            NN                              NC                             CB
-            NCN                             NBC                            CHB
-    NC              CN              NB              BC              CH              HB
-    NBC             CCN             NBB             BBC             CBH             HCB
- NB      BC      CC      CN      NB      BB      BB      BC      CB      BH      HC      CB
- NBB     BBC     CNC     CCN     NBB     BNB     BNB     BBC     CHB     BHH     HBC     CHB
-NB  BB  BB  BC  CN  NC  CC  CN  NB  BB  BN  NB  BN  NB  BB  BC  CH  HB  BH  HH  HB  BC  CH  HB
-NBB BNB BNB BBC CCN NBC CNC CCN NBB BNB BBN NBB BBN NBB BNB BBC CBH HCB BHH HNH HCB BBC CBH HCB
+9 1 1                                                                                                                                                                                                  
+    2 3                                                                                                                                                                                                
+      1 5 7 6 9 1 1 1 2 8 1 5 5 1 2 1                                                                                                                                                                  
+                                    1 3 2 1 4 4 4 5 3 1                                                                                                                                                
+                                                      1                                                                                                                                                
+                                                      1                                                                                                                                                
+                                                      1                                                                                                                                                
+                                                      9 2 1 1                                                                                                                                          
+                                                            1                                                                                                                                          
+                                                            1 4                                                                                                                                        
+                                                              6 2                                                                                                                                      
+                                                                2 2                                                                                                                                    
+                                                                  1 2 1                                                                                                                                
+                                                                      1 2                                                                                                                              
+                                                                        6                                                                                                                              
+                                                                        1                                                                                                                              
+                                                                        5 2 1                                                                                                                          
+                                                                            1 1 3 1                                                                                                                    
+                                                                                  4                                                                                                                    
+                                                                                  4                                                                                                                    
+                                                                                  1 3 1 2                                                                                                              
+                                                                                        9 1                                                                                                            
+                                                                                          1                                                                                                            
+                                                                                          1 4 3                                                                                                        
+                                                                                              1                                                                                                        
+                                                                                              1 4                                                                                                      
+                                                                                                1                                                                                                      
+                                                                                                1 3 1                                                                                                  
+                                                                                                    5 2 1 5                                                                                            
+                                                                                                          7 2 1 1                                                                                      
+                                                                                                                2                                                                                      
+                                                                                                                1                                                                                      
+                                                                                                                2                                                                                      
+                                                                                                                8 1                                                                                    
+                                                                                                                  2                                                                                    
+                                                                                                                  2 1                                                                                  
+                                                                                                                    1 5                                                                                
+                                                                                                                      2                                                                                
+                                                                                                                      1                                                                                
+                                                                                                                      9                                                                                
+                                                                                                                      1 1 9 1                                                                          
+                                                                                                                            6                                                                          
+                                                                                                                            1 1 4                                                                      
+                                                                                                                                1                                                                      
+                                                                                                                                3                                                                      
+                                                                                                                                1                                                                      
+                                                                                                                                3                                                                      
+                                                                                                                                2 5                                                                    
+                                                                                                                                  3                                                                    
+                                                                                                                                  1                                                                    
+                                                                                                                                  6 3                                                                  
+                                                                                                                                    1 4 1 3                                                            
+                                                                                                                                          3                                                            
+                                                                                                                                          6                                                            
+                                                                                                                                          1 1 1 6                                                      
+                                                                                                                                                4 7                                                    
+                                                                                                                                                  3                                                    
+                                                                                                                                                  1 2                                                  
+                                                                                                                                                    7                                                  
+                                                                                                                                                    6 1 3 3 1 1 5 1                                    
+                                                                                                                                                                  2 1                                  
+                                                                                                                                                                    9                                  
+                                                                                                                                                                    2                                  
+                                                                                                                                                                    3                                  
+                                                                                                                                                                    8                                  
+                                                                                                                                                                    1 1                                
+                                                                                                                                                                      2                                
+                                                                                                                                                                      1                                
+                                                                                                                                                                      8                                
+                                                                                                                                                                      9                                
+                                                                                                                                                                      1 5 5 3 1                        
+                                                                                                                                                                              3                        
+                                                                                                                                                                              8                        
+                                                                                                                                                                              1                        
+                                                                                                                                                                              1                        
+                                                                                                                                                                              3                        
+                                                                                                                                                                              3                        
+                                                                                                                                                                              5                        
+                                                                                                                                                                              3                        
+                                                                                                                                                                              1                        
+                                                                                                                                                                              2 6 1 5                  
+                                                                                                                                                                                    1 1                
+                                                                                                                                                                                      2 2              
+                                                                                                                                                                                        4              
+                                                                                                                                                                                        1              
+                                                                                                                                                                                        2 4            
+                                                                                                                                                                                          1 1 1 8 2 2  
+                                                                                                                                                                                                    9  
+                                                                                                                                                                                                    1  
+                                                                                                                                                                                                    3 1
+                                                                                                                                                                                                      8
+                                                                                                                                                                                                      5
+                                                                                                                                                                                                      1
+                                                                                                                                                                                                      2
+                                                                                                                                                                                                      4
+                                                                                                                                                                                                      7
+                                                                                                                                                                                                      5
+                                                                                                                                                                                                      1
+                                                                                                                                                                                                      4
+                                                                                                                                                                                                      1
+(572) 00 10 20 21 31 32 42 52 62 72 82 92 102 112 122 132 142 152 162 172 182 183 193 203 213 223 233 243 253 263 273 274 275 276 277 287 297 307 308 309 319 3110 3210 3211 3311 3312 3412 3512 3513 3613 3614 3615 3616 3716 3816 3817 3917 4017 4117 4118 4119 4120 4220 4320 4420 4421 4521 4522 4523 4623 4723 4724 4725 4825 4826 4827 4927 5027 5028 5128 5228 5328 5329 5429 5529 5629 5630 5631 5632 5633 5733 5734 5735 5835 5836 5936 5937 5938 5939 5940 6040 6140 6240 6241 6242 6342 6442 6443 6444 6445 6446 6447 6547 6548 6549 6550 6650 6651 6751 6851 6951 6952 6953 6954 7054 7154 7254 7255 7355 7356 7357 7457 7458 7459 7559 7659 7759 7859 7959 8059 8159 8160 8260 8261 8262 8263 8264 8265 8365 8366 8367 8368 8369 8370 8470 8570 8670 8770 8771 8772 8773 8774 8775 8776 8777 8778 8779 8780 8880 8980 9080 9081 9181 9182 9282 9283 9284 9285 9385 9386 9486 9586 9686 9786 9886 9887 9888 9889 9989 9990 9991 9992 9993 9994 9995 9996 9997 9998 9999
 
 
-HHKONSOSONSVOFCSCNBC
 
-HH  HK  KO  ON  NS  SO  OS  SO  ON  NS  SV  VO  OF  FC  CS  SC  CN  NB  BC
-HPH HOK KNO OCN NHS SPO OHS SPO OCN NHS SVV VVO OPF FFC COS SBC CKN NVB BHC
 
+9 1 1                                                                                                                                                                                                  
+    2 3                                                                                                                                                                                                
+      1 5 7 6 9 1 1 1 2 8 1 5 5 1 2 1                                                                                                                                                                  
+                                    1 3 2 1 4 4 4 5 3 1                                                                                                                                                
+                                                      1                                                                                                                                                
+                                                      1                                                                                                                                                
+                                                      1 9                                                                                                                                              
+                                                        2 1 1                                                                                                                                          
+                                                            1                                                                                                                                          
+                                                            1 4                                                                                                                                        
+                                                              6 2                                                                                                                                      
+                                                                2 2                                                                                                                                    
+                                                                  1 2 1                                                                                                                                
+                                                                      1 2                                                                                                                              
+                                                                        6                                                                                                                              
+                                                                        1                                                                                                                              
+                                                                        5 2 1                                                                                                                          
+                                                                            1 1 3 1                                                                                                                    
+                                                                                  4                                                                                                                    
+                                                                                  4                                                                                                                    
+                                                                                  1 3 1 2                                                                                                              
+                                                                                        9 1                                                                                                            
+                                                                                          1 1 4                                                                                                        
+                                                                                              3                                                                                                        
+                                                                                              1                                                                                                        
+                                                                                              1 4                                                                                                      
+                                                                                                1                                                                                                      
+                                                                                                1 3 1                                                                                                  
+                                                                                                    5 2 1 5                                                                                            
+                                                                                                          7 2 1 1                                                                                      
+                                                                                                                2                                                                                      
+                                                                                                                1                                                                                      
+                                                                                                                2                                                                                      
+                                                                                                                8 1                                                                                    
+                                                                                                                  2                                                                                    
+                                                                                                                  2 1                                                                                  
+                                                                                                                    1 5                                                                                
+                                                                                                                      2                                                                                
+                                                                                                                      1                                                                                
+                                                                                                                      9                                                                                
+                                                                                                                      1 1 9 1                                                                          
+                                                                                                                            6                                                                          
+                                                                                                                            1 1 4                                                                      
+                                                                                                                                1                                                                      
+                                                                                                                                3                                                                      
+                                                                                                                                1                                                                      
+                                                                                                                                3                                                                      
+                                                                                                                                2 5                                                                    
+                                                                                                                                  3                                                                    
+                                                                                                                                  1                                                                    
+                                                                                                                                  6 3                                                                  
+                                                                                                                                    1 4 1 3                                                            
+                                                                                                                                          3                                                            
+                                                                                                                                          6                                                            
+                                                                                                                                          1                                                            
+                                                                                                                                          3                                                            
+                                                                                                                                          3                                                            
+                                                                                                                                          2 7                                                          
+                                                                                                                                            4                                                          
+                                                                                                                                            5                                                          
+                                                                                                                                            1                                                          
+                                                                                                                                            5                                                          
+                                                                                                                                            7                                                          
+                                                                                                                                            1                                                          
+                                                                                                                                            1 2                                                        
+                                                                                                                                              2 4                                                      
+                                                                                                                                                2                                                      
+                                                                                                                                                3 1                                                    
+                                                                                                                                                  4                                                    
+                                                                                                                                                  2                                                    
+                                                                                                                                                  3                                                    
+                                                                                                                                                  1 4 1                                                
+                                                                                                                                                      1                                                
+                                                                                                                                                      2 4 1 2                                          
+                                                                                                                                                            1                                          
+                                                                                                                                                            2 1 1 9 6                                  
+                                                                                                                                                                    3 2                                
+                                                                                                                                                                      4 5 6 1 5                        
+                                                                                                                                                                              3                        
+                                                                                                                                                                              1                        
+                                                                                                                                                                              2 6 1 5                  
+                                                                                                                                                                                    1 1                
+                                                                                                                                                                                      2 2              
+                                                                                                                                                                                        4              
+                                                                                                                                                                                        1              
+                                                                                                                                                                                        2 4            
+                                                                                                                                                                                          1 1 1 8 2 2  
+                                                                                                                                                                                                    9  
+                                                                                                                                                                                                    1  
+                                                                                                                                                                                                    3 1
+                                                                                                                                                                                                      8
+                                                                                                                                                                                                      5
+                                                                                                                                                                                                      1
+                                                                                                                                                                                                      2
+                                                                                                                                                                                                      4
+                                                                                                                                                                                                      7
+                                                                                                                                                                                                      5
+                                                                                                                                                                                                      1
+                                                                                                                                                                                                      4
+                                                                                                                                                                                                      1
+(557) 00 10 20 21 31 32 42 52 62 72 82 92 102 112 122 132 142 152 162 172 182 183 193 203 213 223 233 243 253 263 273 274 275 276 286 287 297 307 308 309 319 3110 3210 3211 3311 3312 3412 3512 3513 3613 3614 3615 3616 3716 3816 3817 3917 4017 4117 4118 4119 4120 4220 4320 4420 4421 4521 4522 4622 4722 4723 4724 4725 4825 4826 4827 4927 5027 5028 5128 5228 5328 5329 5429 5529 5629 5630 5631 5632 5633 5733 5734 5735 5835 5836 5936 5937 5938 5939 5940 6040 6140 6240 6241 6242 6342 6442 6443 6444 6445 6446 6447 6547 6548 6549 6550 6650 6651 6751 6851 6951 6952 6953 6954 6955 6956 6957 7057 7058 7059 7060 7061 7062 7063 7064 7164 7165 7265 7266 7267 7367 7368 7369 7370 7371 7471 7571 7572 7573 7673 7773 7873 7874 7875 7975 8075 8175 8275 8276 8376 8377 8477 8577 8677 8777 8778 8779 8780 8880 8980 9080 9081 9181 9182 9282 9283 9284 9285 9385 9386 9486 9586 9686 9786 9886 9887 9888 9889 9989 9990 9991 9992 9993 9994 9995 9996 9997 9998 9999
+
+
+
+
+
+(557) 00 10 20 21 31 32 42 52 62 72 82 92 102 112 122 132 142 152 162 172 182 183 193 203 213 223 233 243 253 263 273 274 275 276 286 287 297 307 308 309 319 3110 3210 3211 3311 3312 3412 3512 3513 3613 3614 3615 3616 3716 3816 3817 3917 4017 4117 4118 4119 4120 4220 4320 4420 4421 4521 4522 4622 4722 4723 4724 4725 4825 4826 4827 4927 5027 5028 5128 5228 5328 5329 5429 5529 5629 5630 5631 5632 5633 5733 5734 5735 5835 5836 5936 5937 5938 5939 5940 6040 6140 6240 6241 6242 6342 6442 6443 6444 6445 6446 6447 6547 6548 6549 6550 6650 6651 6751 6851 6951 6952 6953 6954 6955 6956 6957 7057 7058 7059 7060 7061 7062 7063 7064 7164 7165 7265 7266 7267 7367 7368 7369 7370 7371 7471 7571 7572 7573 7673 7773 7873 7874 7875 7975 8075 8175 8275 8276 8376 8377 8477 8577 8677 8777 8778 8779 8780 8880 8980 9080 9081 9181 9182 9282 9283 9284 9285 9385 9386 9486 9586 9686 9786 9886 9887 9888 9889 9989 9990 9991 9992 9993 9994 9995 9996 9997 9998 9999
+(572) 00 10 20 21 31 32 42 52 62 72 82 92 102 112 122 132 142 152 162 172 182 183 193 203 213 223 233 243 253 263 273 274 275 276 277 287 297 307 308 309 319 3110 3210 3211 3311 3312 3412 3512 3513 3613 3614 3615 3616 3716 3816 3817 3917 4017 4117 4118 4119 4120 4220 4320 4420 4421 4521 4522 4523 4623 4723 4724 4725 4825 4826 4827 4927 5027 5028 5128 5228 5328 5329 5429 5529 5629 5630 5631 5632 5633 5733 5734 5735 5835 5836 5936 5937 5938 5939 5940 6040 6140 6240 6241 6242 6342 6442 6443 6444 6445 6446 6447 6547 6548 6549 6550 6650 6651 6751 6851 6951 6952 6953 6954 7054 7154 7254 7255 7355 7356 7357 7457 7458 7459 7559 7659 7759 7859 7959 8059 8159 8160 8260 8261 8262 8263 8264 8265 8365 8366 8367 8368 8369 8370 8470 8570 8670 8770 8771 8772 8773 8774 8775 8776 8777 8778 8779 8780 8880 8980 9080 9081 9181 9182 9282 9283 9284 9285 9385 9386 9486 9586 9686 9786 9886 9887 9888 9889 9989 9990 9991 9992 9993 9994 9995 9996 9997 9998 9999
+
+
+
+
+
+
+9 1 1                                                                                                                                                                                                  
+    2 3               5 2 2 2 1                                                                                                                                                                        
+      1 5         1 1 2       5 1 2 1       1 1 3 2 2 2                                                                                                                                                
+        1 3 3 2 3 1                 1 3 2 1 4         1                                                                                                                                                
+                                                      1                                                                                                                                                
+                                                      1                                                                                                                                                
+                                                      1                                                                                                                                                
+                                                      9 2 1 1                                                                                                                                          
+                                                            1                                                                                                                                          
+                                                            1 4                                                                                                                                        
+                                                              6 2                                                                                                                                      
+                                                                2 2                                                                                                                                    
+                                                                  1 2 1 1                                                                                                                              
+                                                                        2                                                                                                                              
+                                                                        6                                                                                                                              
+                                                                        1                                                                                                                              
+                                                                        5 2 1                                                                                                                          
+                                                                            1 1 3 1                                                                                                                    
+                                                                                  4                                                                                                                    
+                                                                                  4 1                                                                                                                  
+                                                                                    3 1 2                                                                                                              
+                                                                                        9 1                                                                                                            
+                                                                                          1 1 4                                                                                                        
+                                                                                              3                                                                                                        
+                                                                                              1 1                                                                                                      
+                                                                                                4                                                                                                      
+                                                                                                1 3 1                                                                                                  
+                                                                                                    1                                                                                                  
+                                                                                                    5 2 1 5                                                                                            
+                                                                                                          7 2 1 1                                                                                      
+                                                                                                                2                                                                                      
+                                                                                                                1                                                                                      
+                                                                                                                2 8                                                                                    
+                                                                                                                  1                                                                                    
+                                                                                                                  2                                                                                    
+                                                                                                                  2 1                                                                                  
+                                                                                                                    1 5                                                                                
+                                                                                                                      2                                                                                
+                                                                                                                      1                                                                                
+                                                                                                                      9                                                                                
+                                                                                                                      1 1 9 1                                                                          
+                                                                                                                            6                                                                          
+                                                                                                                            1 1 4                                                                      
+                                                                                                                                1                                                                      
+                                                                                                                                3                                                                      
+                                                                                                                                1                                                                      
+                                                                                                                                3                                                                      
+                                                                                                                                2 5                                                                    
+                                                                                                                                  3                                                                    
+                                                                                                                                  1                                                                    
+                                                                                                                                  6 3                                                                  
+                                                                                                                                    1 4 1 3                                                            
+                                                                                                                                          3                                                            
+                                                                                                                                          6                                                            
+                                                                                                                                          1                                                            
+                                                                                                                                          3                                                            
+                                                                                                                                          3                                                            
+                                                                                                                                          2 7                                                          
+                                                                                                                                            4                                                          
+                                                                                                                                            5                                                          
+                                                                                                                                            1                                                          
+                                                                                                                                            5                                                          
+                                                                                                                                            7                                                          
+                                                                                                                                            1                                                          
+                                                                                                                                            1 2                                                        
+                                                                                                                                              2                                                        
+                                                                                                                                              4 2                                                      
+                                                                                                                                                3 1                                                    
+                                                                                                                                                  4                                                    
+                                                                                                                                                  2                                                    
+                                                                                                                                                  3                                                    
+                                                                                                                                                  1 4 1                                                
+                                                                                                                                                      1                                                
+                                                                                                                                                      2 4 1 2                                          
+                                                                                                                                                            1                                          
+                                                                                                                                                            2 1 1 9                                    
+                                                                                                                                                                  6 3 2                                
+                                                                                                                                                                      4 5 6 1 5                        
+                                                                                                                                                                              3                        
+                                                                                                                                                                              1                        
+                                                                                                                                                                              2 6 1 5                  
+                                                                                                                                                                                    1 1                
+                                                                                                                                                                                      2 2              
+                                                                                                                                                                                        4              
+                                                                                                                                                                                        1              
+                                                                                                                                                                                        2 4            
+                                                                                                                                                                                          1 1 1 8 2 2  
+                                                                                                                                                                                                    9  
+                                                                                                                                                                                                    1  
+                                                                                                                                                                                                    3 1
+                                                                                                                                                                                                      8
+                                                                                                                                                                                                      5
+                                                                                                                                                                                                      1
+                                                                                                                                                                                                      2
+                                                                                                                                                                                                      4
+                                                                                                                                                                                                      7
+                                                                                                                                                                                                      5
+                                                                                                                                                                                                      1
+                                                                                                                                                                                                      4
+                                                                                                                                                                                                      1
+(540) 00 10 20 21 31 32 42 43 53 63 73 83 93 92 102 112 111 121 131 141 151 152 162 172 182 183 193 203 213 223 222 232 242 252 262 272 273 274 275 276 277 287 297 307 308 309 319 3110 3210 3211 3311 3312 3412 3512 3612 3613 3614 3615 3616 3716 3816 3817 3917 4017 4117 4118 4119 4219 4220 4320 4420 4421 4521 4522 4622 4722 4723 4724 4824 4825 4826 4926 5026 5027 5028 5128 5228 5328 5329 5429 5529 5629 5630 5631 5632 5732 5733 5734 5735 5835 5836 5936 5937 5938 5939 5940 6040 6140 6240 6241 6242 6342 6442 6443 6444 6445 6446 6447 6547 6548 6549 6550 6650 6651 6751 6851 6951 6952 6953 6954 6955 6956 6957 7057 7058 7059 7060 7061 7062 7063 7064 7164 7165 7166 7266 7267 7367 7368 7369 7370 7371 7471 7571 7572 7573 7673 7773 7873 7874 7875 7975 8075 8175 8176 8276 8376 8377 8477 8577 8677 8777 8778 8779 8780 8880 8980 9080 9081 9181 9182 9282 9283 9284 9285 9385 9386 9486 9586 9686 9786 9886 9887 9888 9889 9989 9990 9991 9992 9993 9994 9995 9996 9997 9998 9999
+*/
+
+
+case class Point(x: Int, y: Int)
+type Field = Map[Point, Int]
+case class Path(points: List[Point], total: Int)
+
+
+scala.math.pow(2, 20).toInt
+
+
+System.currentTimeMillis()
+
+
+/*
+
+10 - 607 (0)
+11 - 602 (1)
+12 - 600 (2)
+13 - 575 (5)
+14 - 575 (25)
+15 - 572 (83)
+16 - 581 (171)
+17 - 572 (371)
+18 - 572 (705)
 
 */
 
-val source = """
-HHKONSOSONSVOFCSCNBC
+12 % 2
+13 % 10
 
-OO -> N
-VK -> B
-KS -> N
-PK -> H
-FB -> H
-BF -> S
-BB -> V
-KO -> N
-SP -> K
-HK -> O
-PV -> K
-BP -> O
-VO -> V
-OP -> C
-BS -> V
-OK -> V
-KN -> H
-KC -> N
-PP -> F
-NB -> V
-CH -> V
-HO -> K
-PN -> H
-SS -> O
-CK -> P
-VV -> K
-FN -> O
-BH -> B
-SC -> B
-HH -> P
-FO -> O
-CC -> H
-OS -> H
-FP -> S
-HC -> F
-BO -> F
-CF -> S
-NC -> S
-HS -> V
-KF -> O
-ON -> C
-CN -> K
-VF -> F
-NO -> K
-CP -> N
-HF -> K
-CV -> N
-HN -> K
-VH -> B
-KK -> P
-CS -> O
-VS -> P
-NH -> F
-CB -> S
-BV -> P
-FK -> F
-NV -> O
-OV -> K
-SB -> N
-NF -> O
-VN -> S
-OH -> O
-PS -> N
-HB -> H
-SV -> V
-CO -> H
-SO -> P
-FV -> N
-PF -> O
-NN -> S
-KB -> P
-NP -> F
-OC -> S
-FS -> P
-FH -> P
-VP -> K
-BN -> O
-NS -> H
-VB -> V
-PO -> K
-KP -> N
-SN -> O
-BC -> H
-SF -> V
-PC -> O
-NK -> F
-BK -> V
-KH -> S
-SH -> S
-SK -> H
-OB -> V
-PH -> N
-PB -> C
-HV -> N
-HP -> V
-FF -> B
-OF -> P
-VC -> S
-KV -> C
-FC -> F
-"""
+List(('a', 1), ('b', 2), ('c', 3), ('d', 4), ('a', 2), ('c', 3), ('b', 4), ('c', 5)).find(_._1 == 'c')
 
-val sample = """
-NNCB
+List(1,2,3,4,5,6).span(_ < 4)
 
-CH -> B
-HH -> N
-CB -> H
-NH -> C
-HB -> C
-HC -> B
-HN -> C
-NN -> C
-BH -> H
-NC -> B
-NB -> B
-BN -> B
-BB -> N
-BC -> B
-CC -> N
-CN -> C
-"""
+List(2,3,4,1,5,6).min
+List(2,3,4,1,5,6).distinct
 
-case class Input(polymerTemplate: String, pairInsertion: Map[String, String])
 
-def formatted(source: String): Input = {
-  val polymerTemplate :: pairInsertionString :: Nil = "(?m)^$".r.split(source.trim).toList
-  val pairMap = 
-    pairInsertionString.trim.linesIterator
-      .map(_.trim.split(" -> "))
-      .map(l => l(0) -> l(1))
-      .toMap
+val o = Some("aaa")
+o.fold(false)(_ => true)
 
-  Input(polymerTemplate.trim, pairMap)
+
+def direction(prev: Point, next: Point): Int = {
+  val dx = next.x - prev.x
+  val dy = next.y - prev.y
+  dx + dy
 }
 
-// val i = formatted(sample)
-val i = formatted(source)
-
-val defaultMap =
-  i.pairInsertion.map(pairInsert => {
-    val key = pairInsert._1
-    val left = key(0)
-    val right = key(1)
-    val middle = pairInsert._2
-    key -> s"$left$middle$right"
+def purposeful(pathes: List[Path]): List[Path] = {
+  pathes.filter(path => {
+    val pairs = (path.points.init zip path.points.tail)
+    val (right, wrong) = pairs.map(pp => direction(pp._1, pp._2)).partition(_ > 0)
+    right.length > wrong.length * 3
   })
-
-def multiply(countMap: Map[String, Long], multiplier: Long) =
-  countMap.view.mapValues(_ * multiplier).toMap
-
-multiply(Map("AA" -> 2L, "AB" -> 0L, "BA" -> 1L, "CC" -> 2345L), 99L)
-
-def sum(countMaps: List[Map[String, Long]]): Map[String, Long] = {
-  val keys = countMaps.flatMap(_.keySet).toSet
-
-  keys.map(k => {
-    k -> countMaps.map(m => m.get(k).getOrElse(0L)).sum
-  }).toMap
 }
 
-sum(List(Map("AA" -> 0L, "AB" -> 0L), Map("AB" -> 1L, "BA" -> 1L), Map("BA" -> 3L, "BB" -> 3L)))
+val p0 = Point(0, 0)
+val p1 = Point(1, 0)
+val p2 = Point(1, 1)
+val p3 = Point(1, 2)
+val p4 = Point(2, 2)
 
+val p2_ = Point(1, 0)
+
+purposeful(List(Path(List(p0), 0)))
+
+val path = Path(List(p0), 0)
+val pairs = (path.points.init zip path.points.tail)
+val (right, wrong) = pairs.map(pp => direction(pp._1, pp._2)).partition(_ > 0)
+
+
+val m1 = Map(1 -> 'a', 2 -> 'b')
+val m2 = Map(2 -> 'c', 3 -> 'd')
+val m3 = Map(3 -> 'e', 4 -> 'f')
+
+m1 ++ m2 ++ m3
 
 
